@@ -1,3 +1,4 @@
+
 async function Auth(username, password) {
   const raw = JSON.stringify({
     "password": username || process.env.REACT_APP_USERNAME,
@@ -11,16 +12,24 @@ async function Auth(username, password) {
     redirect: 'follow'
   };
 
-  const url = "https://prova.deploy.profranchising.com.br/auth/login"
-  const response = await fetch(url, requestOptions)
+  try {
+    const url = "https://prova.deploy.profranchising.com.br/auth/login"
+    const response = await fetch(url, requestOptions)
+    const authorization = response.headers.has('Authorization')
 
-  if (response.status === 200) {
-    document.cookie = `token=${response.headers.get('Authorization').split(' ')[1]}`
+    if (authorization) {
+      const tokenAPI = response.headers.get('Authorization').split(' ')[1]
+
+      document.cookie = `token=${tokenAPI}`
+      return tokenAPI
+    } else {
+      const result = await response.json()
+
+      throw new Error(result.message)
+    }
+
+  } catch (e) {
+    document.getElementById('invalidMessage').innerText = e.message
   }
-
-  const result = await response.json()
-  console.log(result)
-  return result
 }
-
 export default Auth
