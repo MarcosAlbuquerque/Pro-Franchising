@@ -14,7 +14,6 @@ async function getProducts(page = 1, size = 5) {
 
     const response = await fetch(`${baseUrl}/product/list`, requestOptions)
     const result = await response.json()
-    // console.log(result)
 
     return result
   } catch (e) {
@@ -22,7 +21,7 @@ async function getProducts(page = 1, size = 5) {
   }
 }
 
-async function createProducts(nameProduct, imageProduct, ingredients = []) {
+async function createProduct(nameProduct, imageProduct, ingredients = []) {
   const requestOptions = {
     method: 'POST',
     headers: myHeaders,
@@ -32,7 +31,7 @@ async function createProducts(nameProduct, imageProduct, ingredients = []) {
         "ingredients": [
           {
             "cost": 0,
-            "name": "string", //ok
+            "name": "string",
             "quantity": 0
           }
         ],
@@ -49,7 +48,7 @@ async function createProducts(nameProduct, imageProduct, ingredients = []) {
 
 const API = {
   getProducts,
-  createProducts
+  createProduct
 }
 
 export default API
