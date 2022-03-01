@@ -39,11 +39,3 @@ export default function Recipes() {
     </>
   );
 }
-
-// import { useNavigate } from 'react-router-dom';
-// setItemsAPI();
-// if (auth) {
-// document.cookie.slice(6) === token
-// } else {
-// navigate('../', { replace: true });
-// }
