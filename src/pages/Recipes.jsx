@@ -1,40 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import { nanoid } from 'nanoid';
 import proFranchisingAPI from '../api/products';
+import RecipeCard from './components/RecipesCard';
+import HeaderMenu from './components/HeaderMenu';
+import { useNavigate } from 'react-router-dom';
 
 export default function Recipes() {
   const [itemsAPI, setItemsAPI] = useState();
   const [loaded, setLoaded] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!itemsAPI) {
+    if (document.cookie.length === 0) {
+      navigate('../', { replace: true });
+    } else if (!itemsAPI) {
       proFranchisingAPI.getProducts().then((res) => {
         res.content.map((item) => setItemsAPI([{ ...item }]));
-        console.log(res.content);
-        console.log(res);
         setLoaded(true);
+        // console.log(res.content);
+        // console.log(res);
       });
     }
   });
 
-  if (!loaded) {
-    return <h1>Carregando</h1>;
-  } else {
-    return (
-      <>
-        <h1 key={nanoid()}>Recipes</h1>
-        <p id='invalidMessage' key={nanoid()}></p>
-        {itemsAPI.map((item) => {
-          return (
-            <div key={nanoid()}>
-              <img src={item.image} alt={item.name} key={nanoid()} />
-              <h1 key={nanoid()}>{item.name}</h1>
-            </div>
-          );
-        })}
-      </>
-    );
-  }
+  return (
+    <>
+      <HeaderMenu />
+      {!loaded ? (
+        <h1 id='loading'>Carregando...</h1>
+      ) : (
+        <>
+          <h1 key={nanoid()}>Produtos</h1>
+          {itemsAPI.map((item) => (
+            <RecipeCard key={nanoid()} props={item} />
+          ))}
+        </>
+      )}
+    </>
+  );
 }
 
 // import { useNavigate } from 'react-router-dom';
