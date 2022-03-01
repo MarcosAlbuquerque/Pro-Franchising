@@ -28,7 +28,7 @@ export default function Login() {
         onClick={() => {
           auth(username, password).then((res) => {
             if (document.cookie.slice(6) === res) {
-              navigate({ to: '/receitas' });
+              navigate('/receitas');
             }
           });
         }}
