@@ -17,7 +17,7 @@ function CreateItem() {
     } catch (e) {
       navigate('../', { replace: true });
     }
-  })
+  });
 
   return (
     <>
@@ -50,11 +50,6 @@ function CreateItem() {
           onChange={(e) => setPrice(e.target.value)}
         />
       </div>
-      <h2>Preview</h2>
-      <div style={{ display: 'flex', gap: '5px' }}>
-        <img src={image} alt={name} style={{ width: '100px' }} />
-        <h2 style={{ padding: 0, margin: 0 }}>{name}</h2>
-      </div>
       <h2>Ingredientes</h2>
       <div
         style={{
@@ -82,6 +77,11 @@ function CreateItem() {
           placeholder='Quantidade do Ingrediente'
           onChange={(e) => setIngredientQuant(e.target.value)}
         />
+      </div>
+      <h2>Preview</h2>
+      <div style={{ display: 'flex', gap: '5px' }}>
+        <img src={image} alt={name} style={{ width: '100px' }} />
+        <h2 style={{ padding: 0, margin: 0 }}>{name}</h2>
       </div>
       <p>
         <strong id='statusCadastro'></strong>
