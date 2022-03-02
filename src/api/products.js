@@ -13,7 +13,7 @@ async function getProducts(page = 1, size = 5) {
       redirect: 'follow'
     };
 
-    const response = await fetch(`${baseUrl}/product/list`, requestOptions)
+    const response = await fetch(`${baseUrl}/product/list?page=${page}&size=${size}`, requestOptions)
     const result = await response.json()
 
     return result
