@@ -8,10 +8,13 @@ export default function Login() {
   const navigate = useNavigate();
 
   return (
-    <section>
+    <section id='login'>
+      <label htmlFor='username'>Faça o login na sua conta</label>
       <input
         type='text'
         name='username'
+        id='username'
+        placeholder='Usuário'
         autoFocus
         required
         onChange={(e) => setUsername(e.target.value)}
@@ -19,6 +22,7 @@ export default function Login() {
       <input
         type='password'
         name='password'
+        placeholder='Senha'
         required
         onChange={(e) => setPassword(e.target.value)}
       />

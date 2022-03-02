@@ -5,6 +5,7 @@ import Login from './pages/Login'
 import Recipes from './pages/Recipes'
 import CreateItem from './pages/CreateItem'
 import EditItem from './pages/EditItem'
+import './styles/App.css'
 
 function App() {
   return (
