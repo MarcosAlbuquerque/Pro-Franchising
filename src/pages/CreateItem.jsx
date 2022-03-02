@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import proFranchisingAPI from '../api/products';
 
@@ -10,6 +10,14 @@ function CreateItem() {
   const [ingredientName, setIngredientName] = useState('');
   const [ingredientCost, setingredientCost] = useState(0);
   const [ingredientQuant, setIngredientQuant] = useState(0);
+
+  useEffect(() => {
+    try {
+      document.cookie.split(';')[1].slice(7);
+    } catch (e) {
+      navigate('../', { replace: true });
+    }
+  })
 
   return (
     <>
