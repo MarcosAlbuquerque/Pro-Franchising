@@ -27,8 +27,12 @@ export default function Login() {
         value='Entrar'
         onClick={() => {
           auth(username, password).then((res) => {
-            if (document.cookie.split(';')[1].slice(7) === res) {
-              navigate('/receitas');
+            try {
+              if (document.cookie.split(';')[1].slice(7) === res) {
+                navigate('/receitas');
+              }
+            } catch (e) {
+              return;
             }
           });
         }}
