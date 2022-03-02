@@ -19,7 +19,10 @@ async function Auth(username, password) {
 
     if (authorization) {
       const tokenAPI = response.headers.get('Authorization').split(' ')[1]
+      const resultJSON = response.json()
+      const data = await resultJSON
 
+      document.cookie = `user=${data.name}`
       document.cookie = `token=${tokenAPI}`
       return tokenAPI
     } else {
