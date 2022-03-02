@@ -59,9 +59,69 @@ async function createProduct(nameProduct, imageProduct, priceProduct, ingredient
 
 }
 
+async function updateProduct(id, nameProduct, imageProduct, priceProduct, ingredients = []) {
+  try {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${document.cookie.split(';')[1].slice(7)}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    const requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: JSON.stringify(
+        {
+          "id": id,
+          "image": imageProduct,
+          "ingredients": ingredients,
+          "name": nameProduct,
+          "price": priceProduct
+        }
+      ),
+      redirect: 'follow'
+    };
+
+    const response = await fetch(`${baseUrl}/product/save`, requestOptions)
+
+    if (response.status === 400) {
+      const resultJSON = await response.json()
+      return resultJSON
+
+    } else if (response.status === 200) {
+      document.getElementById('statusCadastro').innerText = 'Receita editada com sucesso'
+      return response
+    }
+
+  } catch (e) {
+    console.log(e.message)
+  }
+
+}
+
+async function deleteProduct(id) {
+  try {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${document.cookie.split(';')[1].slice(7)}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    const requestOptions = {
+      method: 'DELETE',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    const response = await fetch(`${baseUrl}/product/delete/${id}`, requestOptions)
+
+    return response
+  } catch (e) {
+    console.log(e.message)
+  }
+}
+
 const API = {
   getProducts,
-  createProduct
+  createProduct,
+  updateProduct,
+  deleteProduct
 }
 
 export default API
