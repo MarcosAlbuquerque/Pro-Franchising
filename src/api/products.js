@@ -1,11 +1,12 @@
 //script gerado do Postman
 const baseUrl = "https://prova.deploy.profranchising.com.br"
-const myHeaders = new Headers();
-myHeaders.append("Authorization", `Bearer ${document.cookie.slice(6)}`);
-myHeaders.append("Content-Type", "application/json");
 
 async function getProducts(page = 1, size = 5) {
   try {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${document.cookie.split(';')[1].slice(7)}`);
+    myHeaders.append("Content-Type", "application/json");
+
     const requestOptions = {
       method: 'GET',
       headers: myHeaders,
@@ -17,33 +18,45 @@ async function getProducts(page = 1, size = 5) {
 
     return result
   } catch (e) {
-    document.getElementById('invalidMessage').innerText = e.message
+    console.log(e.message)
   }
 }
 
-async function createProduct(nameProduct, imageProduct, ingredients = []) {
-  const requestOptions = {
-    method: 'POST',
-    headers: myHeaders,
-    body: JSON.stringify(
-      {
-        "image": imageProduct,
-        "ingredients": [
-          {
-            "cost": 0,
-            "name": "string",
-            "quantity": 0
-          }
-        ],
-        "name": nameProduct,
-        "price": 0
-      }
-    ),
-    redirect: 'follow'
-  };
-  const response = await fetch(`${baseUrl}/product/save`, requestOptions)
-  const result = await response.json()
-  console.log(result)
+async function createProduct(nameProduct, imageProduct, priceProduct, ingredients = []) {
+  try {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${document.cookie.split(';')[1].slice(7)}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    const requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: JSON.stringify(
+        {
+          "image": imageProduct,
+          "ingredients": ingredients,
+          "name": nameProduct,
+          "price": priceProduct
+        }
+      ),
+      redirect: 'follow'
+    };
+
+    const response = await fetch(`${baseUrl}/product/save`, requestOptions)
+
+    if (response.status === 400) {
+      const resultJSON = await response.json()
+      return resultJSON
+
+    } else if (response.status === 200) {
+      document.getElementById('statusCadastro').innerText = 'Receita criada com sucesso'
+      return response
+    }
+
+  } catch (e) {
+    console.log(e.message)
+  }
+
 }
 
 const API = {
