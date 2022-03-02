@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import { nanoid } from 'nanoid';
 import { useNavigate } from 'react-router-dom';
 import profranchisingAPI from '../../api/products';

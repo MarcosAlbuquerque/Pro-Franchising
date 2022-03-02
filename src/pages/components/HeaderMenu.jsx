@@ -4,7 +4,7 @@ import React from 'react';
 function HeaderMenu() {
   const navigate = useNavigate();
   return (
-    <>
+    <header>
       <strong>{document.cookie.split(';')[0].slice(5)}</strong>
       <button
         onClick={() => {
@@ -14,7 +14,7 @@ function HeaderMenu() {
       >
         Sair
       </button>
-    </>
+    </header>
   );
 }
 
