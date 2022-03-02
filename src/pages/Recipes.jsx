@@ -4,6 +4,7 @@ import proFranchisingAPI from '../api/products';
 import RecipeCard from './components/RecipesCard';
 import HeaderMenu from './components/HeaderMenu';
 import { useNavigate } from 'react-router-dom';
+import FooterMenu from './components/FooterMenu';
 
 export default function Recipes() {
   const [itemsAPI, setItemsAPI] = useState();
@@ -15,7 +16,10 @@ export default function Recipes() {
       navigate('../', { replace: true });
     } else if (!itemsAPI) {
       proFranchisingAPI.getProducts().then((res) => {
-        res.content.map((item) => setItemsAPI([{ ...item }]));
+        console.log(res);
+        const listItemsAPI = [];
+        res.content.map((item) => listItemsAPI.push(item));
+        setItemsAPI(listItemsAPI);
         setLoaded(true);
         // console.log(res.content);
         // console.log(res);
@@ -31,11 +35,10 @@ export default function Recipes() {
       ) : (
         <>
           <h1 key={nanoid()}>Produtos</h1>
-          {itemsAPI.map((item) => (
-            <RecipeCard key={nanoid()} props={item} />
-          ))}
+          <RecipeCard key={nanoid()} props={itemsAPI} />
         </>
       )}
+      <FooterMenu />
     </>
   );
 }
