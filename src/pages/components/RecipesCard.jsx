@@ -10,8 +10,8 @@ function RecipeCard({ props }) {
     const { name, image, price, id } = item;
 
     return (
-      <div key={nanoid()}>
-        <img src={image} alt={name} width='100px' key={nanoid()} />
+      <div class='products' key={nanoid()}>
+        <img src={image} alt={name} key={nanoid()} />
         <div>
           <h1 key={nanoid()}>{name}</h1>
           <p>Preço R${price}</p>

@@ -43,7 +43,7 @@ export default function Login() {
       >
         Entrar
       </button>
-      <span id='invalidMessage'></span>
+      <span id='invalidMessage'>&nbsp;</span>
     </section>
   );
 }
