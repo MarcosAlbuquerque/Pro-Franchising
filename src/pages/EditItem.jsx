@@ -7,16 +7,23 @@ import proFranchisingAPI from '../api/products';
 function EditItem() {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const [name, setName] = useState(state.name);
-  const [image, setImage] = useState(state.image);
-  const [price, setPrice] = useState(state.price);
-  const [ingredientName, setIngredientName] = useState(state.ingredients[0].name);
-  const [ingredientCost, setingredientCost] = useState(state.ingredients[0].cost);
-  const [ingredientQuant, setIngredientQuant] = useState(state.ingredients[0].quantity);
+  const [name, setName] = useState('');
+  const [image, setImage] = useState('');
+  const [price, setPrice] = useState(0);
+  const [ingredientName, setIngredientName] = useState('');
+  const [ingredientCost, setingredientCost] = useState(0);
+  const [ingredientQuant, setIngredientQuant] = useState(0);
 
   useEffect(() => {
     try {
       document.cookie.split(';')[1].slice(7);
+
+      setName(state.name);
+      setImage(state.image);
+      setPrice(state.price);
+      setIngredientName(state.ingredients[0].name);
+      setingredientCost(state.ingredients[0].cost);
+      setIngredientQuant(state.ingredients[0].quantity);
     } catch (e) {
       navigate('../', { replace: true });
     }
@@ -57,45 +64,46 @@ function EditItem() {
         />
       </div>
       <h2>Ingredientes</h2>
-      {state.ingredients.map((item, index) => {
-        return (
-          <div
-            key={nanoid()}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              padding: '10px 0',
-              gap: '6px',
-            }}
-          >
-            <p key={nanoid()}>Ingrediente {index + 1}</p>
-            <input
-              type='text'
-              id='ingredientName'
-              placeholder='Nome do Ingrediente'
-              value={item.name}
+      {state &&
+        state.ingredients.map((item, index) => {
+          return (
+            <div
               key={nanoid()}
-              onChange={(e) => setIngredientName(e.target.value)}
-            />
-            <input
-              type='number'
-              id='ingredientCost'
-              placeholder='Quanto Custa o Ingrediente'
-              value={item.cost}
-              key={nanoid()}
-              onChange={(e) => setingredientCost(e.target.value)}
-            />
-            <input
-              type='number'
-              id='ingredientQuant'
-              placeholder='Quantidade do Ingrediente'
-              value={item.quantity}
-              key={nanoid()}
-              onChange={(e) => setIngredientQuant(e.target.value)}
-            />
-          </div>
-        );
-      })}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                padding: '10px 0',
+                gap: '6px',
+              }}
+            >
+              <p key={nanoid()}>Ingrediente {index + 1}</p>
+              <input
+                type='text'
+                id='ingredientName'
+                placeholder='Nome do Ingrediente'
+                value={item.name}
+                key={nanoid()}
+                onChange={(e) => setIngredientName(e.target.value)}
+              />
+              <input
+                type='number'
+                id='ingredientCost'
+                placeholder='Quanto Custa o Ingrediente'
+                value={item.cost}
+                key={nanoid()}
+                onChange={(e) => setingredientCost(e.target.value)}
+              />
+              <input
+                type='number'
+                id='ingredientQuant'
+                placeholder='Quantidade do Ingrediente'
+                value={item.quantity}
+                key={nanoid()}
+                onChange={(e) => setIngredientQuant(e.target.value)}
+              />
+            </div>
+          );
+        })}
       <h2>Preview</h2>
       <div style={{ display: 'flex', gap: '5px' }}>
         <img src={image} alt={name} style={{ width: '100px' }} />
